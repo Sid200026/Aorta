@@ -1,2 +1,2 @@
 # medeasy
-Hackday hackathon project
+Hackday Hackathon Project
