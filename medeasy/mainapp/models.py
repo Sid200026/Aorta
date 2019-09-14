@@ -39,3 +39,10 @@ class ModelReport(models.Model):
 
     def __str__(self):
         return self.patient.user.username
+
+class ModelTwoReport(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    report_content = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.patient.user.username
