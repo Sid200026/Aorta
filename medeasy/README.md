@@ -1,2 +1,0 @@
-# medeasy
-Hackday Hackathon Project
