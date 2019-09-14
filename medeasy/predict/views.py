@@ -24,6 +24,7 @@ def predict(request):
 				del request_values['csrfmiddlewaretoken']
 				int_features = [int(x) for x in request_values.values()]
 				final_features = [np.array(int_features)]
+				final_features=np.int64(final_features)
 				prediction = model.predict(final_features)
 				output = round(prediction[0], 2)
 				if(output == 1):

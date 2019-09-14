@@ -9,7 +9,12 @@ from .models import Patient, Doctor
 from django.shortcuts import redirect
 
 
-# Create your views here.
+def getmatchingdoctor():
+    doctors=Doctor.objects.all().order_by('numberofpatients')
+    doctor_to_return=doctors[0]
+    doctor_to_return.numberofpatients+=1
+    doctor_to_return.save()
+    return doctor_to_return
 
 def index(request):
     return render(request, 'mainapp/HomePage.html')
@@ -72,6 +77,7 @@ def completeaccount(request):
             patient_obj = Patient(user=user, firstname=firstname, lastname=lastname, dateofbirth=dateofbirth,
                                   address=address, phonenumber=phonenumber, age=age, sex=sex)
             if patient_obj:
+                patient_obj.doctor=getmatchingdoctor()
                 patient_obj.save()
                 return HttpResponseRedirect(reverse('mainapp:dashboard'))
             else:

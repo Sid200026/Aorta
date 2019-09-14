@@ -12,6 +12,7 @@ class Doctor(models.Model):
     iscertified = models.BooleanField(default=False)
     registrationno = models.CharField(max_length=30)
     bio = models.CharField(max_length=100)
+    numberofpatients=models.IntegerField(default=0,blank=True)
 
     def __str__(self):
         return self.user.username
@@ -25,7 +26,7 @@ class Patient(models.Model):
     address = models.CharField(max_length=100, default=None, blank=True)
     phonenumber = models.CharField(max_length=10, default=None, blank=True)
     age = models.IntegerField()
-    sex = models.CharField(max_length=6, blank=False, default=True)
+    sex = models.CharField(max_length=6, blank=False)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
