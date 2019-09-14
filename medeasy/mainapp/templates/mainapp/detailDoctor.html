@@ -11,49 +11,45 @@
 <body class="align">
 
   <div class="grid">
-    <form method="POST" class="form login" action="{% url 'mainapp:updateuser' %}">
+    <form method="POST" class="form login">
         {% csrf_token %}
-      <h1 class = "error">Complete Details</h1>
+      <h1 class = "error">Details</h1>
         <div class="form__field">
         <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
-        <input id="login__username" type="text" name="firstname" class="form__input" placeholder="First Name" required value ={{data.firstname}}>
+        <input id="login__username" type="text" name="firstname" class="form__input" placeholder="First Name" value ={{data.firstname}}>
       </div>
 
       <div class="form__field">
         <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Email</span></label>
-        <input id="login__username" type="text" name="lastname" class="form__input" placeholder="Last Name" required value ={{data.lastname}}>
+        <input id="login__username" readonly="readonly" type="text" name="lastname" class="form__input" placeholder="Last Name" value ={{data.lastname}}>
       </div>
 
       <div class="form__field">
         <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Email</span></label>
-        <input id="login__username" type="number" name="phone" class="form__input" placeholder="Phone Number" required value ={{data.phonenumber}}>
+        <input id="login__username" readonly="readonly" type="number" name="phone" class="form__input" placeholder="Phone Number" value ={{data.phonenumber}}>
       </div>
 
       <div class="form__field">
         <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Email</span></label>
-        <input id="login__username" type="text" name="degrees" class="form__input" placeholder="Degrees" required value ={{data.degrees}}>
+        <input id="login__username" readonly="readonly" type="text" name="degrees" class="form__input" placeholder="Degrees" value ={{data.degrees}}>
       </div>
+
+              <div class="form__field">
+        <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Email</span></label>
+          <input id="login__username" readonly type="number" name="regno" class="form__input" placeholder="Practitioner Number" required value ={{data.registrationno}}>
+      </div>
+
 
       <div class="form__field">
         <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Email</span></label>
-          <input id="login__username" type="number" name="regno" class="form__input" placeholder="Practitioner Number" required value ={{data.registrationno}}>
-      </div>
-
-      <div class="form__field">
-        <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Email</span></label>
-        <input id="login__username" type="text" name="bio" class="form__input" placeholder="Bio" required value ={{data.bio}}>
-      </div>
-
-            <div class="form__field">
-        <label for="type1">Certified</label>
-        <input id="type1" type="radio" name="certification" class="" value="Yes" required>
-        <label for="type2">Not Certified</label>
-        <input id="type2" type="radio" name="certification" class="" value="No" required>
+        <input id="login__username" readonly="readonly" type="text" name="bio" class="form__input" placeholder="Bio" value ={{data.bio}}>
       </div>
 
 
       <div class="form__field">
-        <input type="submit" value="Submit Changes">
+                  <div class="flex">
+            <a href="{% url 'mainapp:dashboard' %}"><button class="customBut" type="button">Go Back</button></a>
+          </div>
       </div>
 
     </form>

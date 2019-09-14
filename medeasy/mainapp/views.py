@@ -10,11 +10,17 @@ from django.shortcuts import redirect
 
 
 def getmatchingdoctor():
-    doctors=Doctor.objects.all().order_by('numberofpatients')
-    doctor_to_return=doctors[0]
-    doctor_to_return.numberofpatients+=1
+    doctors = Doctor.objects.all().order_by('numberofpatients')
+    doctor_to_return = doctors[0]
+    doctor_to_return.numberofpatients += 1
     doctor_to_return.save()
     return doctor_to_return
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('mainapp:index'))
+
 
 def index(request):
     return render(request, 'mainapp/HomePage.html')
@@ -77,7 +83,7 @@ def completeaccount(request):
             patient_obj = Patient(user=user, firstname=firstname, lastname=lastname, dateofbirth=dateofbirth,
                                   address=address, phonenumber=phonenumber, age=age, sex=sex)
             if patient_obj:
-                patient_obj.doctor=getmatchingdoctor()
+                patient_obj.doctor = getmatchingdoctor()
                 patient_obj.save()
                 return HttpResponseRedirect(reverse('mainapp:dashboard'))
             else:
@@ -163,8 +169,20 @@ def UpdateUser(request):
 @login_required
 def dash(request):
     if request.user.user_type == 'Patient':
-        return render(request, 'mainapp/Dashboard.html')
+        return render(request, 'mainapp/Dashboard.html', {'usertype': request.user.username})
     elif request.user.user_type == 'Doctor':
-        return render(request,'mainapp/DashboardTwo.html')
+        return render(request, 'mainapp/DashboardTwo.html', {'usertype': request.user.username})
     else:
         return HttpResponse('no session')
+
+
+@login_required
+def account(request):
+    if request.user.user_type == 'Doctor':
+        doc = Doctor.objects.get(user=request.user)
+        return render(request, 'mainapp/detailDoctor.html', {'data': doc})
+    elif request.user.user_type == 'Patient':
+        pat = Patient.objects.get(user=request.user)
+        return render(request, 'mainapp/detailPatient.html', {'data': pat})
+    else:
+        return HttpResponse("Failure")

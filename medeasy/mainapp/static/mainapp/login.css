@@ -255,3 +255,19 @@ p {
 .error {
   text-align: center;
 }
+
+.flex {
+  width:100%;
+  display:flex;
+  justify-content: center;
+}
+.customBut {
+  font-size: 15px;
+  color: whitesmoke;
+  padding: 10px;
+  background-color: red;
+  border-radius: 15px;
+}
+.customBut:hover{
+  cursor:pointer;
+}

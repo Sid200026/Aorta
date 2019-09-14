@@ -10,8 +10,8 @@
         <div class="sidenav">
         <br>
         <br>
-        <a href="#">Profile</a>
-        <a href="#">Messages</a>
+            <a href="{% url 'mainapp:logout' %}">Logout</a>
+        <a href="{% url 'mainapp:account' %}">Profile</a>
         <a href="{% url 'predict:predicter' %}">Self Diagnosis Check</a>
         <a href="#">View Reports</a>
         <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
@@ -27,7 +27,7 @@
 
         <!-- Page content -->
         <div class="main">
-            <p>LET'S GET STARTED</p>
+            <p>Hello {{ usertype }}</p>
         </div>
     </body>
     
