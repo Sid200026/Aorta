@@ -1,37 +1,51 @@
-<!DOCTYPE html>
 <html>
-    
+{% load static %}
     <head>
-        <script type="text/javascript" src="HomePage.js"></script>  
-        <link rel="stylesheet" type="text/css" href="HomePageStyle.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
-    
-    <body>
-
-        <div class="topnav" id="myTopnav">
-            <a href="#home" class="active">Home</a>
-            <a href="#about">About Us</a>
-            <a href="#Whatsnew">What's New</a>
-            <a href="#contact">Contact</a>
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-            </a>
+<link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'mainapp/HomePage.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">        
+<body>
+<div class="ct" id="t1">
+  <div class="ct" id="t2">
+    <div class="ct" id="t3">
+      <div class="ct" id="t4">
+         <div class="ct" id="t5">
+          <ul id="menu">
+            <a href="#t1"><li class="icon fa fa-medkit" aria-hidden="true"></li></a>
+              <br>
+            <a href="#t2"><li class="icon fa fa-info-circle" id="dos"></li></a>
+              <br>
+            <a href="#t3"><li class="icon fa fa-question" id="tres"></li></a>
+              <br>
+              <a href="#t4"><li class="icon fa fa-credit-card-alt" id="cuatro"></li></a>
+              <br>
+            <a href="#t5"><li class="icon fa fa-plus-circle" id="cinco"></li></a>
+              <br>
+          </ul>
+          <div class="page" id="p1">
+             <section class="icon fa fa-medkit" style="align-content: center"><span class="title">Aorta</span><span class="hint">Healthy Heart Care</span>
+                 <a href = {%url 'mainapp:loginuser'%}><button class="button">Login</button></a>
+                 <a href = {%url 'mainapp:reguser'%}><button class="button">SignUp</button></a>
+              </section>  
+          </div>
+          <div class="page" id="p2">
+            <section class="icon fa fa-info-circle"><span class="title">About Us</span>
+                <span class ="hint"> CTRL ALT DEFEAT - HACKDAY HACKATHON PROJECT.</span>
+              </section>
+          </div>  
+          <div class="page" id="p3">
+            <section class="icon fa fa-question"><span class="title">How it works?</span><span class="hint">We provide a personal health care suit that assists both doctor as well as patient in early diagnosis and treatment of heart problems. With Aorta, you can self diagnose your heart using our ML Prediction Models. Because your health matters to us :)</span></section>
+              
+          </div>
+          <div class="page" id="p4">
+            <section class="icon fa fa-credit-card-alt">
+              <span class="title">Pricing</span>
+            </section>
+          </div>
         </div>
-        
-        <img src="MedeasyLogo.png" class="center">
-        
-        <div>
-            <button class="button">Login</button>
-            <button class="button">SignUp</button>
-        </div>
-        
-        <br>
-        <p class ="tagline" style="page-break-before: always">Effortless Healthcare.</p>
-
-
-
-
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

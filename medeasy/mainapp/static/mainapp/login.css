@@ -140,7 +140,11 @@ input[type='submit'] {
 }
 
 .form input[type='password'],
+.form input[type='number'],
+.form input[type='file'],
+.form input[type='radio'],
 .form input[type='text'],
+.form input[type='date'],
 .form input[type='submit'] {
   width: 100%;
 }
@@ -177,6 +181,10 @@ input[type='submit'] {
 .login label,
 .login input[type='text'],
 .login input[type='password'],
+.login input[type='number'],
+.login input[type='file'],
+.login input[type='date'],
+.login input[type='radio'],
 .login input[type='submit'] {
   border-radius: var(--loginBorderRadus);
   padding: 1rem;
@@ -191,6 +199,10 @@ input[type='submit'] {
 }
 
 .login input[type='password'],
+.login input[type='number'],
+.login input[type='file'],
+.login input[type='date'],
+.login input[type='radio'],
 .login input[type='text'] {
   background-color: var(--loginInputBackgroundColor);
   border-bottom-left-radius: 0;
@@ -199,6 +211,14 @@ input[type='submit'] {
 
 .login input[type='password']:focus,
 .login input[type='password']:hover,
+.login input[type='number']:focus,
+.login input[type='number']:hover,
+.login input[type='file']:focus,
+.login input[type='file']:hover,
+.login input[type='date']:hover,
+.login input[type='date']:focus,
+.login input[type='radio']:focus,
+.login input[type='radio']:hover,
 .login input[type='text']:focus,
 .login input[type='text']:hover {
   background-color: var(--loginInputHoverBackgroundColor);
@@ -232,7 +252,6 @@ p {
   text-align: center;
 }
 
-.error{
+.error {
   text-align: center;
-  color:white;
 }
