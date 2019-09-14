@@ -13,6 +13,9 @@
   <div class="grid">
     <form method="POST" class="form login" action="{% url 'mainapp:reguser' %}">
         {% csrf_token %}
+            {% if isfail%}
+            <h2 class = "error">Username already exists</h2>
+          {% endif%}
         <div class="form__field">
         <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
         <input id="login__username" type="text" name="username" class="form__input" placeholder="Username" required>
@@ -36,9 +39,9 @@
 
       <div class="form__field">
         <label for="type1">Patient</label>
-        <input id="type1" type="radio" name="usertype" class="form__input" value="Patient" required>
+        <input id="type1" type="radio" name="usertype" class="" value="Patient" required>
         <label for="type2">Doctor</label>
-        <input id="type2" type="radio" name="usertype" class="form__input" value="Doctor" required>
+        <input id="type2" type="radio" name="usertype" class="" value="Doctor" required>
       </div>
 
       <div class="form__field">
@@ -56,7 +59,7 @@
 </body>
 
 <script type="text/javascript">
-  if({{ iffail }} === 'True')
+  if({{ iffail }} == True)
     alert("Failed to create user");
 </script>
 
