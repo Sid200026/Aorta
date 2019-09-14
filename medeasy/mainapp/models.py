@@ -25,7 +25,7 @@ class Patient(models.Model):
     address = models.CharField(max_length=100, default=None, blank=True)
     phonenumber = models.CharField(max_length=10, default=None, blank=True)
     age = models.IntegerField()
-    sex = models.CharField(max_length=6, blank=False)
+    sex = models.CharField(max_length=6, blank=False, default=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):

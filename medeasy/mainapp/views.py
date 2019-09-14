@@ -129,9 +129,6 @@ def UpdateUser(request):
             lastname = request.POST.get('lastname')
             dob = request.POST.get('dob')
             address = request.POST.get('addr')
-            age = dt.datetime.now().year - int(dob[0:4])
-            weight = request.POST.get('weight')
-            height = request.POST.get('height')
             sex = request.POST.get('sex')
             phonenumber = request.POST.get('phone')
             pat = Patient.objects.get(user=user)
@@ -140,20 +137,19 @@ def UpdateUser(request):
             pat.lastname = lastname
             pat.phonenumber = phonenumber
             pat.dateofbirth = dob
-            pat.age = age
+            pat.age = dt.datetime.now().year - int(dob[0:4])
             pat.address = address
-            pat.weight = weight
             pat.sex = sex
-            pat.height = height
             pat.save()
             return HttpResponseRedirect(reverse('mainapp:dashboard'))
-
-        docdata = Doctor.objects.get(user=request.user)
-        return render(request, 'mainapp/doctorUpdate.html', {'data': docdata})
-    elif request.user.user_type == 'Patient':
-        user = request.user
-        patdata = Patient.objects.get(user=user)
-        return render(request, 'mainapp/patientUpdate.html', {'data': patdata})
+    if request.method == 'GET':
+        if request.user.user_type == 'Doctor':
+            docdata = Doctor.objects.get(user=request.user)
+            return render(request, 'mainapp/doctorUpdate.html', {'data': docdata})
+        elif request.user.user_type == 'Patient':
+            user = request.user
+            patdata = Patient.objects.get(user=user)
+            return render(request, 'mainapp/patientUpdate.html', {'data': patdata})
     else:
         return HttpResponse("Fail")
 
