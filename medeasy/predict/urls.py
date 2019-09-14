@@ -9,4 +9,5 @@ app_name='predict'
 
 urlpatterns=[
 	path('predict/', views.predict, name="predicter"),
+	path('predict/save',views.saveresults,name="saveresult")
 ]

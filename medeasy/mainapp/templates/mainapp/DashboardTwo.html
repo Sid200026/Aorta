@@ -1,0 +1,34 @@
+<html>
+{% load static %}
+    <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainapp/Dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    </head>
+    
+    <body bgcolor = "#483D8B">
+        <div class="sidenav">
+        <br>
+        <br>
+        <a href="#">Profile</a>
+        <a href="#">Messages</a>
+        <a href="#">View Reports</a>
+        <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+        </div>
+        
+        
+        <div class="topnav">
+            <a class="active" href="#home">xxxx</a>
+            <a href="#about">xxxx</a>
+            <a href="#contact"></a>
+            <input type="text" placeholder="Search..">
+        </div>
+
+        <!-- Page content -->
+        <div class="main">
+            <p>LET'S GET STARTED</p>
+        </div>
+    </body>
+    
+    
+</html

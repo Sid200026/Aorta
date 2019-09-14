@@ -162,4 +162,9 @@ def UpdateUser(request):
 
 @login_required
 def dash(request):
-    return render(request, 'mainapp/Dashboard.html')
+    if request.user.user_type == 'Patient':
+        return render(request, 'mainapp/Dashboard.html')
+    elif request.user.user_type == 'Doctor':
+        return render(request,'mainapp/DashboardTwo.html')
+    else:
+        return HttpResponse('no session')

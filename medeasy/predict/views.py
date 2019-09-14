@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
+from mainapp.models import ModelReport,Patient
 import numpy as np
 import pickle
 import os
@@ -31,8 +32,22 @@ def predict(request):
 					message="You might have a condition, consult a doctor"
 				else:
 					message="Your heart is healthy"
-				return render(request,'predict/results.html',{'output':message})
+				return render(request,'predict/results.html',{'output':message,'params':request_values})
 		else:
 			# return HttpResponseRedirect(reverse('mainapp:reguser'))
 			return HttpResponse('not patient')
 
+@login_required
+def saveresults(request):
+	if request.method == 'POST':
+		if request.user.user_type == 'Patient':
+			request_values=request.POST
+			request_values=dict(request_values)
+			del request_values['csrfmiddlewaretoken']
+			curr_patient=Patient.objects.get(user=request.user)
+			model_obj=ModelReport(patient=curr_patient,report_content=str(request_values))
+			if model_obj:
+				model_obj.save()
+				return HttpResponse('created')
+		else:
+			return HttpResponse('not a patient')

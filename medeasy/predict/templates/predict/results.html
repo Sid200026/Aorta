@@ -10,7 +10,32 @@
 
 <body class="align">
 
+	{% for param,value in params.items %}
+		<div class="dispalyval">
+			<p><span>{{param}}</span> : <span>{{value}}</span></p>
+		</div>
+	{% endfor %}
+
     <p>{{ output }}</p>
+
+        <form action="{% url 'predict:saveresult' %}"method="post">
+          {% csrf_token %}
+        	<input type="hidden" value="{{params.age}}" name="age" />
+        	<input type="hidden" value="{{params.sex}}" name="sex"/>
+    		<input type="hidden" value="{{params.cp}}" name="cp" />
+    		<input type="hidden" value="{{params.trestbps}}" name="trestbps"  />
+    		<input type="hidden" value="{{params.chol}}" name="chol"  />
+    		<input type="hidden" value="{{params.fbs}}" name="fbs"  />
+    		<input type="hidden" value="{{params.restecg}}" name="restecg"  />
+            <input type="hidden" value="{{params.thalach}}" name="thalach"  />
+    		<input type="hidden" value="{{params.exang}}" name="exang"  />
+    		<input type="hidden" value="{{params.oldpeak}}" name="oldpeak"  />
+            <input type="hidden" value="{{params.slope}}" name="slope"  />
+    		<input type="hidden" value="{{params.ca}}" name="ca"  />
+    		<input type="hidden" value="{{params.thal}}" name="thal"  />
+    		
+            <button type="submit">Save</button>
+        </form>
 
 
   </div>
