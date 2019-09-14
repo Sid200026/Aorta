@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from users.models import CustomUser
+import datetime as dt
+from .models import Patient,Doctor
 
 
 # Create your views here.
@@ -33,8 +35,53 @@ def RegUser(request):
 		usertype = request.POST.get('usertype')
 		try:
 			new_user = CustomUser.objects.create_user(username=username,email=email,password=password,user_type=usertype)
-			return render(request, 'mainapp/signup.html',{'isfail':False})
+			login(request,new_user)
+			return HttpResponseRedirect(reverse('mainapp:completeaccount'))
 		except:
-			return render(request, 'mainapp/signup.html',{'isfail':True})
+			return render(request, 'mainapp/signup.html',{'isfail':None})
 	else:
 		return render(request, 'mainapp/signup.html',{'isfail':False})
+
+@login_required
+def completeaccount(request):
+	if request.method == 'GET':
+		if request.user.user_type == 'Patient':
+			return render(request,'mainapp/patientcompleteaccount.html')
+		elif request.user.user_type == 'Doctor' :
+			return render(request,'mainapp/doctorcompleteaccount.html')	
+		else:
+			return HttpResponseRedirect(reverse('mainapp:reguser'))
+
+	elif request.method == 'POST':
+		if request.user.user_type == 'Patient':
+			firstname=request.POST.get('firstname')
+			lastname=request.POST.get('lastname')
+			address=request.POST.get('address',default=None)
+			phonenumber=request.POST.get('phonenumber',default=None)
+			dateofbirth=request.POST.get('dateofbirth')
+			age=dt.datetime.now().year-int(dateofbirth[0:4])
+			sex=request.POST.get('sex')
+			user=request.user
+			patient_obj=Patient(user=user,firstname=firstname,lastname=lastname,dateofbirth=dateofbirth,address=address,phonenumber=phonenumber,age=age,sex=sex)
+			if patient_obj :
+				patient_obj.save()
+				return HttpResponse('success')
+			else:
+				return HttpResponse('failure')
+
+		elif request.user.user_type == 'Doctor':
+			firstname=request.POST.get('firstname')
+			lastname=request.POST.get('lastname')
+			phonenumber=request.POST.get('phonenumber',default=None)
+			user=request.user
+			degrees=request.POST.get('degrees')
+			registrationno=request.POST.get('registrationno')
+			bio=request.POST.get('bio')
+			doctor_obj=Doctor(user=user,firstname=firstname,lastname=lastname,phonenumber=phonenumber,degrees=degrees,registrationno=registrationno,bio=bio)
+			if doctor_obj :
+				doctor_obj.save()
+				return HttpResponse('success')
+			else:
+				return HttpResponse('failure')
+	else:
+		return HttpResponse('Wrong method')

@@ -13,7 +13,7 @@
   <div class="grid">
     <form method="POST" class="form login" action="{% url 'mainapp:reguser' %}">
         {% csrf_token %}
-            {% if isfail%}
+          {% if isfail %}
             <h2 class = "error">Username already exists</h2>
           {% endif%}
         <div class="form__field">
@@ -39,9 +39,9 @@
 
       <div class="form__field">
         <label for="type1">Patient</label>
-        <input id="type1" type="radio" name="usertype" class="" value="Patient" required>
+        <input id="type1" type="radio" name="usertype" class="form__input" value="Patient" required>
         <label for="type2">Doctor</label>
-        <input id="type2" type="radio" name="usertype" class="" value="Doctor" required>
+        <input id="type2" type="radio" name="usertype" class="form__input" value="Doctor" required>
       </div>
 
       <div class="form__field">

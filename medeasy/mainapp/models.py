@@ -7,7 +7,6 @@ class Doctor(models.Model):
 	user=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
 	firstname=models.CharField(max_length=50,blank=False)
 	lastname=models.CharField(max_length=50,blank=False)
-	profilepicture=models.ImageField(upload_to='profileimages/')
 	phonenumber=models.CharField(max_length=10,blank=False)
 	degrees=models.CharField(max_length=50,blank=False)
 	iscertified=models.BooleanField(default=False)
@@ -22,14 +21,11 @@ class Patient(models.Model):
 	firstname=models.CharField(max_length=50,blank=False)
 	lastname=models.CharField(max_length=50,blank=False)
 	dateofbirth=models.CharField(max_length=10,blank=False)
-	address=models.CharField(max_length=100,blank=False)
-	phonenumber=models.CharField(max_length=10)
-	profilepicture=models.ImageField(upload_to='profileimages/')
+	address=models.CharField(max_length=100,default=None,blank=True)
+	phonenumber=models.CharField(max_length=10,default=None,blank=True)
 	age=models.IntegerField()
-	weight=models.IntegerField()
-	height=models.IntegerField()
-	sex=models.CharField(max_length=6,choices=[('Male','Male'),('Female','Female'),('Other','Other')],blank=False)
-	doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE,default=None)
+	sex=models.CharField(max_length=6,blank=False)
+	doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE,blank=True)
 
 	def __str__(self):
 		return self.user.username
