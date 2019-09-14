@@ -12,7 +12,7 @@ class Doctor(models.Model):
     iscertified = models.BooleanField(default=False)
     registrationno = models.CharField(max_length=30)
     bio = models.CharField(max_length=100)
-    numberofpatients=models.IntegerField(default=0,blank=True)
+    numberofpatients = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -40,9 +40,20 @@ class ModelReport(models.Model):
     def __str__(self):
         return self.patient.user.username
 
+
 class ModelTwoReport(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     report_content = models.CharField(max_length=500)
 
     def __str__(self):
         return self.patient.user.username
+
+
+class Notifications(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    hasNotification = models.BooleanField(default=False)
+    msg = models.CharField(max_length=400)
+
+    def __str__(self):
+        return self.patient.user.username + '    '+self.doctor.user.username

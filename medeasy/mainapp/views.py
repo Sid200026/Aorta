@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from users.models import CustomUser
 import datetime as dt
-from .models import Patient, Doctor
+from .models import Patient, Doctor, Notifications
 from django.shortcuts import redirect
 
 
@@ -168,10 +168,16 @@ def UpdateUser(request):
 
 @login_required
 def dash(request):
+    context = {'usertype': request.user.username}
     if request.user.user_type == 'Patient':
         return render(request, 'mainapp/Dashboard.html', {'usertype': request.user.username})
     elif request.user.user_type == 'Doctor':
-        return render(request, 'mainapp/DashboardTwo.html', {'usertype': request.user.username})
+        doc = Doctor.objects.get(user=request.user)
+        docNotif = Notifications.objects.filter(doctor=doc)
+        docNotif = docNotif.filter(hasNotification=True)
+        if docNotif:
+            context['notif'] = 'You have new notifications'
+        return render(request, 'mainapp/DashboardTwo.html', context)
     else:
         return HttpResponse('no session')
 
@@ -186,3 +192,32 @@ def account(request):
         return render(request, 'mainapp/detailPatient.html', {'data': pat})
     else:
         return HttpResponse("Failure")
+
+
+@login_required
+def notif(request):
+    if request.user.user_type != 'Doctor':
+        return HttpResponse("failure")
+    else:
+        doc = Doctor.objects.get(user=request.user)
+        docNotif = Notifications.objects.filter(doctor=doc)
+        res = []
+        for notif in docNotif:
+            notif.hasNotification = False
+            res.append(notif.patient.user.username)
+            notif.save()
+        k = list(set(res))
+    print(k)
+    return render(request, 'mainapp/Notification.html', {'k': k})
+
+
+@login_required
+def viewreport(request):
+    if request.user.user_type == 'Doctor':
+        doc = Doctor.objects.get(user=request.user)
+        docNotif = Notifications.objects.filter(doctor=doc)
+        return HttpResponse(docNotif)
+    elif request.user.user_type == 'Patient':
+        pat = Patient.objects.get(user=request.user)
+        patNotif = Notifications.objects.filter(patient=pat)
+        return HttpResponse(patNotif)

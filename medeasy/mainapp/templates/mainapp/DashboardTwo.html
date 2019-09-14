@@ -12,8 +12,11 @@
         <br>
             <a href="{% url 'mainapp:logout' %}">Logout</a>
         <a href="{% url 'mainapp:account' %}">Profile</a>
-        <a href="#">View Reports</a>
+        <a href="{% url 'mainapp:report' %}">View Reports</a>
         <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+            {%  if notif %}
+            <a href="{% url 'mainapp:notification' %}">New Notifications</a>
+            {% endif %}
         </div>
         
         

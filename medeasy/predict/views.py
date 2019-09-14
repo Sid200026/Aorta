@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from mainapp.models import ModelReport,Patient
+from mainapp.models import ModelReport,Patient, Notifications, Doctor
 import numpy as np
 import pickle
 import os
@@ -48,6 +48,10 @@ def saveresults(request):
 			model_obj=ModelReport(patient=curr_patient,report_content=str(request_values))
 			if model_obj:
 				model_obj.save()
+				pat = Patient.objects.get(user=request.user)
+				doc = Doctor.objects.get(user = pat.doctor.user)
+				notif = Notifications.objects.create(patient= pat, doctor= doc, hasNotification= True, msg= model_obj.report_content)
+
 				return HttpResponse('created')
 		else:
 			return HttpResponse('not a patient')

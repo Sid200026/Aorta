@@ -12,4 +12,6 @@ urlpatterns = [
     path('user/dashboard/', views.dash, name="dashboard"),
     path('logout/', views.logout_view, name="logout"),
     path('user/account/', views.account, name="account"),
+    path('user/notification/', views.notif, name="notification"),
+    path('user/reports/', views.viewreport, name='report'),
 ]

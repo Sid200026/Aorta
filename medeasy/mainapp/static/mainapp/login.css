@@ -271,3 +271,7 @@ p {
 .customBut:hover{
   cursor:pointer;
 }
+
+.notifcheck{
+  font-size: 10px;
+}
