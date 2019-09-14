@@ -9,6 +9,7 @@ from users.models import CustomUser
 # Create your views here.
 
 def loginUser(request):
+	context = {'error':'Wrong Username or Password'}
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
@@ -17,7 +18,7 @@ def loginUser(request):
 			login(request, user)
 			return HttpResponse(user.user_type)
 		else:
-			return HttpResponse('Failure')
+			return render(request, 'mainapp/login.html', context)
 	else:
 		return render(request, 'mainapp/login.html')
 
@@ -32,8 +33,8 @@ def RegUser(request):
 		usertype = request.POST.get('usertype')
 		try:
 			new_user = CustomUser.objects.create_user(username=username,email=email,password=password,user_type=usertype)
-			return render(request, 'mainapp/signup.html',{'isfail':'False'})
+			return render(request, 'mainapp/signup.html',{'isfail':False})
 		except:
-			return render(request, 'mainapp/signup.html',{'isfail':'True'})
+			return render(request, 'mainapp/signup.html',{'isfail':True})
 	else:
-		return render(request, 'mainapp/signup.html',{'isfail':'False'})
+		return render(request, 'mainapp/signup.html',{'isfail':False})

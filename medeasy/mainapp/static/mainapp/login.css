@@ -231,3 +231,8 @@ p {
 .text--center {
   text-align: center;
 }
+
+.error{
+  text-align: center;
+  color:white;
+}
