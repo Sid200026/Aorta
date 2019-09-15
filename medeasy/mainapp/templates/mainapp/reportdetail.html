@@ -10,6 +10,19 @@
 
 <body class="align">
 
+  <div class="sidenav">
+  <img style="height:200px;width:200px;" src="{% static 'mainapp/logo.png' %}">
+  
+  <a href="{% url 'mainapp:account' %}">Profile</a>
+  <a href="{% url 'mainapp:report' %}">View Reports</a>
+  <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+      {%  if notif %}
+      <a href="{% url 'mainapp:notification' %}">New Notifications</a>
+      {% endif %}
+  <a href="{% url 'mainapp:mail' %}">Send Email</a>
+  <a href="{% url 'mainapp:logout' %}">Logout</a>
+  </div>
+
   <div class="grid">
     <form class="form login">
         {% csrf_token %}
@@ -20,11 +33,6 @@
             <input id="login__username" readonly="readonly" type="text" name="firstname" class="form__input" placeholder="First Name" value="{{value}}">
             </div>
         {%  endfor %}
-      <div class="form__field">
-          <div class="flex">
-            <a href="{% url 'mainapp:dashboard' %}"><button class="customBut" type="button">Go Back</button></a>
-          </div>
-      </div>
 
     </form>
 

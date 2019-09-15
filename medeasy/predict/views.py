@@ -6,6 +6,7 @@ import numpy as np
 import pickle
 from django.core.mail import EmailMessage
 import os
+from django.urls import reverse
 
 # Create your views here.
 
@@ -16,7 +17,7 @@ def predict(request):
 			return render(request,'predict/index.html')
 		else:
 			# return HttpResponseRedirect(reverse('mainapp:reguser'))
-			return HttpResponse('not patient')
+			return HttpResponseRedirect(reverse('mainapp:loginuser'))
 	if request.method == 'POST':
 		if request.user.user_type == 'Patient':
 			with open('predict/model.pkl','rb') as model_pkl:
@@ -36,13 +37,12 @@ def predict(request):
 					body = "The prediction showed a positive result for a heart condition in one of your patient. Please check on them immediately."
 					email = EmailMessage('Medical Emergency', body, to=[docEmail])
 					email.send()
-
 				else:
 					message="Your heart is healthy"
 				return render(request,'predict/results.html',{'output':message,'params':request_values})
 		else:
 			# return HttpResponseRedirect(reverse('mainapp:reguser'))
-			return HttpResponse('not patient')
+			return HttpResponseRedirect(reverse('mainapp:loginuser'))
 
 @login_required
 def saveresults(request):
@@ -59,6 +59,6 @@ def saveresults(request):
 				doc = Doctor.objects.get(user = pat.doctor.user)
 				notif = Notifications.objects.create(patient= pat, doctor= doc, hasNotification= True, msg= model_obj.report_content)
 
-				return HttpResponse('created')
+				return HttpResponseRedirect(reverse('mainapp:dashboard'))
 		else:
-			return HttpResponse('not a patient')
+			return HttpResponseRedirect(reverse('mainapp:loginuser'))

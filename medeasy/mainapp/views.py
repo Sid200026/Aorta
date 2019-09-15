@@ -85,10 +85,14 @@ def completeaccount(request):
                                   address=address, phonenumber=phonenumber, age=age, sex=sex)
             if patient_obj:
                 patient_obj.doctor = getmatchingdoctor()
+                em=patient_obj.doctor.user.email
+                body="{} is now your patient! ".format(patient_obj.user.username)
+                mel=EmailMessage("New Patient",body,to=[em])
+                mel.send()
                 patient_obj.save()
                 return HttpResponseRedirect(reverse('mainapp:dashboard'))
             else:
-                return HttpResponse('failure')
+                return HttpResponseRedirect(reverse('mainapp:reguser'))
 
         elif request.user.user_type == 'Doctor':
             firstname = request.POST.get('firstname')
@@ -104,9 +108,9 @@ def completeaccount(request):
                 doctor_obj.save()
                 return HttpResponseRedirect(reverse('mainapp:dashboard'))
             else:
-                return HttpResponse('failure')
+                return HttpResponseRedirect(reverse('mainapp:reguser'))
     else:
-        return HttpResponse('Wrong method')
+        return HttpResponseRedirect(reverse('mainapp:reguser'))
 
 
 @login_required
@@ -164,7 +168,7 @@ def UpdateUser(request):
             patdata = Patient.objects.get(user=user)
             return render(request, 'mainapp/patientUpdate.html', {'data': patdata})
     else:
-        return HttpResponse("Fail")
+        return HttpResponseRedirect(reverse('mainapp:reguser'))
 
 
 @login_required
@@ -180,7 +184,7 @@ def dash(request):
             context['notif'] = 'You have new notifications'
         return render(request, 'mainapp/DashboardTwo.html', context)
     else:
-        return HttpResponse('no session')
+        return HttpResponseRedirect(reverse('mainapp:reguser'))
 
 
 @login_required
@@ -192,13 +196,13 @@ def account(request):
         pat = Patient.objects.get(user=request.user)
         return render(request, 'mainapp/detailPatient.html', {'data': pat})
     else:
-        return HttpResponse("Failure")
+        return HttpResponseRedirect(reverse('mainapp:reguser'))
 
 
 @login_required
 def notif(request):
     if request.user.user_type != 'Doctor':
-        return HttpResponse("failure")
+        return HttpResponseRedirect(reverse('mainapp:userlogin'))
     else:
         doc = Doctor.objects.get(user=request.user)
         docNotif = Notifications.objects.filter(doctor=doc)
@@ -210,19 +214,6 @@ def notif(request):
         k = list(set(res))
     print(k)
     return render(request, 'mainapp/Notification.html', {'k': k})
-
-
-@login_required
-def viewreport(request):
-    if request.user.user_type == 'Doctor':
-        doc = Doctor.objects.get(user=request.user)
-        docNotif = Notifications.objects.filter(doctor=doc)
-        return HttpResponse(docNotif)
-    elif request.user.user_type == 'Patient':
-        pat = Patient.objects.get(user=request.user)
-        patNotif = Notifications.objects.filter(patient=pat)
-        return HttpResponse(patNotif)
-
 
 def mail(request):
     if request.method == 'POST':
@@ -270,4 +261,4 @@ def viewreportdetail(request,pk):
             modelreport[val]=modelreport[val][0]
         return render(request,'mainapp/reportdetail.html',{'object':modelreport})
     else:
-        return HttpResponse('not a session')
+        return HttpResponseRedirect(reverse('mainapp:reguser'))

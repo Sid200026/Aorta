@@ -10,21 +10,29 @@
 
 <body class="align">
 
+  <div class="sidenav">
+  <img style="height:200px;width:200px;" src="{% static 'mainapp/logo.png' %}">
+  
+  <a href="{% url 'mainapp:account' %}">Profile</a>
+  <a href="{% url 'mainapp:report' %}">View Reports</a>
+  <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+      {%  if notif %}
+      <a href="{% url 'mainapp:notification' %}">New Notifications</a>
+      {% endif %}
+  <a href="{% url 'mainapp:mail' %}">Send Email</a>
+  <a href="{% url 'mainapp:logout' %}">Logout</a>
+  </div>
+
   <div class="grid">
     <form method="POST" class="form login">
         {% csrf_token %}
         {% for name in k %}
-          <h1 class = "error">Details</h1>
+          <h1 class = "error">Notifications</h1>
                 <div class="form__field">
             <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
             <input id="login__username" readonly="readonly" type="text" name="firstname" class="form__input" placeholder="First Name" value="{{name}} has performed a Prediction Check">
           </div>
         {%  endfor %}
-      <div class="form__field">
-          <div class="flex">
-            <a href="{% url 'mainapp:dashboard' %}"><button class="customBut" type="button">Go Back</button></a>
-          </div>
-      </div>
 
     </form>
 

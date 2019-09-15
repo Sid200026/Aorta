@@ -20,6 +20,17 @@
 
 <body class="align">
 
+  <div class="sidenav">
+      <img style="height:200px;width:200px;" src="{% static 'mainapp/logo.png' %}">
+
+  <a href="{% url 'mainapp:account' %}">Profile</a>
+  <a href="{% url 'predict:predicter' %}">Self Diagnosis Check</a>
+  <a href="{% url 'mainapp:report' %}">View Reports</a>
+      <a href="{% url 'mainapp:mail' %}">Send Email</a>
+      <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+      <a href="{% url 'mainapp:logout' %}">Logout</a>
+  </div>
+
   <div id="dispalyval">
 	{% for param,value in params.items %}
 		<div>

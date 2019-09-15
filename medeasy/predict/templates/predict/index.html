@@ -5,7 +5,7 @@
 <!--From https://codepen.io/frytyler/pen/EGdtg-->
 <head>
   <meta charset="UTF-8">
-  <title>ML API</title>
+  <title>ML PREDICTER</title>
   <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
@@ -16,7 +16,19 @@
 
 <body>
  <div class="login">
-	<h1>Disease Predictor</h1>
+
+  <div class="sidenav">
+      <img style="height:200px;width:200px;" src="{% static 'mainapp/logo.png' %}">
+
+  <a href="{% url 'mainapp:account' %}">Profile</a>
+  <a href="{% url 'predict:predicter' %}">Self Diagnosis Check</a>
+  <a href="{% url 'mainapp:report' %}">View Reports</a>
+      <a href="{% url 'mainapp:mail' %}">Send Email</a>
+      <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+      <a href="{% url 'mainapp:logout' %}">Logout</a>
+  </div>
+  
+	<h1>Cardiovascular Disease Predictior</h1>
 
      <!-- Main Input For Receiving Query to our ML -->
     <form action="{% url 'predict:predicter' %}"method="post">
