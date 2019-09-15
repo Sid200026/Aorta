@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML PREDICTER</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'predict/style.css' %}">
+  
+</head>
+
+<body>
+ <div class="login">
+
+  <div class="sidenav">
+      <img style="height:200px;width:200px;" src="{% static 'mainapp/logo.png' %}">
+
+  <a href="{% url 'mainapp:account' %}">Profile</a>
+  <a href="{% url 'predict:predicter' %}">Self Diagnosis Check</a>
+  <a href="{% url 'mainapp:report' %}">View Reports</a>
+      <a href="{% url 'mainapp:mail' %}">Send Email</a>
+      <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+      <a href="{% url 'mainapp:logout' %}">Logout</a>
+  </div>
+  
+	<h1>Cardiovascular Disease Predictior</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{% url 'predict:predicter' %}"method="post">
+      {% csrf_token %}
+    <input type="number" name="age" placeholder="Age" required="required" />
+    <input type="number" name="sex" placeholder="Sex(1/0)" required="required" />
+		<input type="number" name="cp" placeholder="Chest Pain(0/1)" required="required" />
+		<input type="number" name="trestbps" placeholder="Rest blood pressure" required="required" />
+		<input type="number" name="chol" placeholder="Cholestrol" required="required" />
+		<input type="number" name="fbs" placeholder="Fasting blood sugar" required="required" />
+		<input type="number" name="restecg" placeholder="Rest ECG result" required="required" />
+        <input type="number" name="thalach" placeholder="Maximum heart rate" required="required" />
+		<input type="number" name="exang" placeholder="Exercise induced angina" required="required" />
+		<input type="number" name="oldpeak" placeholder="ST depression induced by exercise relative to rest" step="any" required="required" />
+        <input type="number" name="slope" placeholder="the slope of the peak exercise ST segment" required="required" />
+		<input type="number" name="ca" placeholder="Number of major vessels (0-3) colored by flourosopy" required="required" />
+		<input type="number" name="thal" placeholder="Minimum Heart Rate" required="required" />
+		
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Reports</title>
+	<link rel="stylesheet" href="{% static 'mainapp/login.css' %}">
+	<style type="text/css">
+		.box{
+			background-color: #454a46;
+			height: 500px;
+			width: 500px;
+			overflow-y: scroll;
+			text-align: center;
+			padding: 10px;
+		}
+		.wrap{
+			background-color: #7a7d7b;
+			width:60%;
+			margin-left: 20%;
+			margin-right:20%;
+			border-radius: 4px;
+		}
+		.link{
+			width: 100%;
+			font-family: Cantarell;
+			font-size:30px;
+		}
+	</style>
+</head>
+<body class="align">
+
+	<div class="sidenav">
+	<img style="height:200px;width:200px;" src="{% static 'mainapp/logo.png' %}">
+	
+	<a href="{% url 'mainapp:account' %}">Profile</a>
+	<a href="{% url 'mainapp:report' %}">View Reports</a>
+	<a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+	    {%  if notif %}
+	    <a href="{% url 'mainapp:notification' %}">New Notifications</a>
+	    {% endif %}
+	<a href="{% url 'mainapp:mail' %}">Send Email</a>
+	<a href="{% url 'mainapp:logout' %}">Logout</a>
+	</div>
+
+	<div class="box">
+	{% for object in objectlist %}
+		<div class="wrap" style="font-family: Cantarell">
+			<a class="link" href="{% url 'mainapp:report' %}{{object.id}}">{{object.patient.user.username}} Report {{forloop.counter}}</a>
+			<br>
+		</div>
+	{% endfor %}
+	</div>
+
+</body>
+</html>

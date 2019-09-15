@@ -1,0 +1,28 @@
+<html>
+{% load static %}
+    <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainapp/Dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cantarell&display=swap" rel="stylesheet">
+    </head>
+    
+    <body bgcolor = "#483D8B">
+        <div class="sidenav">
+        <img style="height:200px;width:200px;" src="{% static 'mainapp/logo.png' %}">
+        <a href="{% url 'mainapp:account' %}">Profile</a>
+        <a href="{% url 'predict:predicter' %}">Self Diagnosis Check</a>
+        <a href="{% url 'mainapp:report' %}">View Reports</a>
+        <a href="{% url 'mainapp:mail' %}">Send Email</a>
+        <a href="{% url 'mainapp:updateuser' %}">Update Details</a>
+        <a href="{% url 'mainapp:logout' %}">Logout</a>
+        </div>
+
+        <!-- Page content -->
+        <div class="main">
+            <p style="font-family: Cantarell">Hello {{ usertype }}</p>
+            <img style="height:500px;width:900px" src="{% static 'mainapp/sign_up_page.png' %}">
+        </div>
+    </body>
+    
+    
+</html>
