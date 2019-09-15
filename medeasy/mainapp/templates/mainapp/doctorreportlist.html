@@ -1,0 +1,13 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% for object in objectlist %}
+	<a href="{% url 'mainapp:report' %}{{object.id}}">{{object.patient.user.username}} Report {{forloop.counter}}</a>
+	<br>
+	{% endfor %}
+</body>
+</html>

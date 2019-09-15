@@ -14,4 +14,7 @@ urlpatterns = [
     path('user/account/', views.account, name="account"),
     path('user/notification/', views.notif, name="notification"),
     path('user/reports/', views.viewreport, name='report'),
+    path('user/email/', views.mail, name='mail'),
+        path('user/reports/', views.viewreport, name='report'),
+    path('user/reports/<int:pk>', views.viewreportdetail, name='reportdetail'),
 ]

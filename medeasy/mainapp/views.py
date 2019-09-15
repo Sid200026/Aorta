@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from users.models import CustomUser
 import datetime as dt
-from .models import Patient, Doctor, Notifications
+from .models import Patient, Doctor, Notifications,ModelReport
+from django.core.mail import EmailMessage
 from django.shortcuts import redirect
 
 
@@ -221,3 +222,52 @@ def viewreport(request):
         pat = Patient.objects.get(user=request.user)
         patNotif = Notifications.objects.filter(patient=pat)
         return HttpResponse(patNotif)
+
+
+def mail(request):
+    if request.method == 'POST':
+        if request.user.user_type == 'Patient':
+            pat = Patient.objects.get(user=request.user)
+            docEmail = pat.doctor.user.email
+            body = request.POST.get('body')
+            email = EmailMessage('Medical Report', body, to=[docEmail])
+            email.send()
+            return HttpResponseRedirect(reverse('mainapp:dashboard'))
+        if request.user.user_type == 'Doctor':
+            doc = Doctor.objects.get(user=request.user)
+            patEmail = request.POST.get('emailauth')
+            body = request.POST.get('body')
+            email = EmailMessage('Medical Report: Reply', body, to=[patEmail])
+            email.send()
+            return HttpResponseRedirect(reverse('mainapp:dashboard'))
+    if request.method == 'GET':
+        if request.user.user_type == 'Patient':
+            return render(request, 'mainapp/PatientEmail.html')
+        if request.user.user_type == 'Doctor':
+            doc = Doctor.objects.get(user=request.user)
+            patients = Patient.objects.filter(doctor= doc)
+            return render(request, 'mainapp/DoctorEmail.html', {'patients':patients})
+
+
+@login_required
+def viewreport(request):
+    if request.user.user_type == 'Doctor':
+        doc = Doctor.objects.get(user=request.user)
+        modelreportqueryset=ModelReport.objects.filter(patient__doctor=doc)
+        return render(request,'mainapp/doctorreportlist.html',{'objectlist':modelreportqueryset})
+    elif request.user.user_type == 'Patient':
+        pat = Patient.objects.get(user=request.user)
+        modelreportqueryset=ModelReport.objects.filter(patient=pat)
+        return render(request,'mainapp/patientreportlist.html',{'objectlist':modelreportqueryset})
+
+@login_required
+def viewreportdetail(request,pk):
+    if request.user.user_type == 'Patient' or request.user.user_type == 'Doctor':
+        modelreport=ModelReport.objects.get(pk=pk)
+        modelreport=modelreport.report_content
+        modelreport=eval(modelreport)
+        for val in modelreport:
+            modelreport[val]=modelreport[val][0]
+        return render(request,'mainapp/reportdetail.html',{'object':modelreport})
+    else:
+        return HttpResponse('not a session')

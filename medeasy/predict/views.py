@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from mainapp.models import ModelReport,Patient, Notifications, Doctor
 import numpy as np
 import pickle
+from django.core.mail import EmailMessage
 import os
 
 # Create your views here.
@@ -30,6 +31,12 @@ def predict(request):
 				output = round(prediction[0], 2)
 				if(output == 1):
 					message="You might have a condition, consult a doctor"
+					pat = Patient.objects.get(user=request.user)
+					docEmail = pat.doctor.user.email
+					body = "The prediction showed a positive result for a heart condition in one of your patient. Please check on them immediately."
+					email = EmailMessage('Medical Emergency', body, to=[docEmail])
+					email.send()
+
 				else:
 					message="Your heart is healthy"
 				return render(request,'predict/results.html',{'output':message,'params':request_values})
