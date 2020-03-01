@@ -1,0 +1,33 @@
+# OS Specific
+.DS_Store
+.Trashes
+.Spotlight-V100
+Thumbs.db
+Icon?
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django Specific
+env/
+venv/
+logs/
+*.env
+*.pyc
+*.log
+*/*/migrations
+!*/migrations/__init__.py
+local_settings.py
+db.sqlite3
+*/media/images/post/*
+*/media/images/profile/*
+
+# IDE Specific
+.vscode
+.idea
+.project
+*.sublime-workspace
+*.sublime-project
