@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'medeasy.wsgi.application'
+# WSGI_APPLICATION = 'medeasy.wsgi.application'
 
 
 # Database
