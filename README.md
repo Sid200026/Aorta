@@ -11,4 +11,4 @@
 
 #### Props go to:
   - ##### Pratik and Harshal for their ML models
-  - ##### Me and Siddharth for the backend and frontend creation
+  - ##### Rishikesh and Siddharth for the backend and frontend creation
